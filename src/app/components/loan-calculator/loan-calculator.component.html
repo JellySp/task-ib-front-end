@@ -1,14 +1,13 @@
-<form class="pic-entry-form">
-  <mat-form-field class="pic-entry-field">
-    <mat-label>Enter personal identification code</mat-label>
-    <input  matInput [formControl]="pic">
-  </mat-form-field>
+<p class="title-text">Loan calculator</p>
+<div class="header-polygon-dark"></div>
+<div class="header-polygon-med"></div>
+<div class="header-polygon-light"></div>
+<div class="pic-form-div">
+  <form class="pic-form">
+    <mat-form-field class="pic-full-width">
+      <mat-label>Personal identification code</mat-label>
+      <input [(ngModel)]="pic" (keyup.enter)="getCustomer(pic)" name="PIC" matInput>
+    </mat-form-field>
 
-</form>
-
-
-
-
-
-<button (click)="getCustomer(pic)">BUTTOON</button>
-
+  </form>
+</div>

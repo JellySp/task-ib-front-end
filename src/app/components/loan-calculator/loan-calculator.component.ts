@@ -18,12 +18,16 @@ export class LoanCalculatorComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getCustomer(pic) {
-    console.log(this.pic);
-    this.customerService.getCustomer(pic).subscribe(
-      response => {
-        console.log(response);
-        this.customer = response;
-      });
+    if (pic.length > 10 && pic.length < 12) {
+
+      console.log(this.pic);
+      this.customerService.getCustomer(pic).subscribe(
+        response => {
+          console.log(response);
+          this.customer = response;
+        });
+
+    }
 
   }
 

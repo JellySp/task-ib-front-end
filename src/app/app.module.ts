@@ -10,12 +10,14 @@ import {MatInputModule} from '@angular/material/input';
 import { LoanCalculatorComponent } from './components/loan-calculator/loan-calculator.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    LoanCalculatorComponent
+    LoanCalculatorComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
