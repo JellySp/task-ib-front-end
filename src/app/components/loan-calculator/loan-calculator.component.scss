@@ -1,0 +1,28 @@
+.pic-form {
+  min-width: 200px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.pic-full-width {
+  width: 100%;
+  text-align: center;
+}
+
+
+.pic-form-div {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+
+
+.title-text {
+  margin: 20px;
+  font-size: xxx-large;
+  position: absolute;
+  z-index: 1;
+}
