@@ -12,14 +12,26 @@ export class LoanCalculatorComponent implements OnInit {
 
   customer: Customer;
   pic = new FormControl('').value;
-  creditScore;
   loanAmount;
   loanPeriod;
 
-  constructor(private customerService: CustomerDataService,
-              private router: Router) {
+  constructor(private customerService: CustomerDataService) {
   }
 
+
+  // tslint:disable-next-line:typedef
+  isEligibleForLoan() {
+    if (this.customer.creditModifier === 0 || this.getCreditScore() <= 1) {
+      return false;
+    }
+    return true;
+
+  }
+
+  // tslint:disable-next-line:typedef
+  getCreditScore() {
+    return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
+  }
   // tslint:disable-next-line:typedef
   getCustomer(pic) {
     if (pic.length === 11) {
@@ -30,17 +42,11 @@ export class LoanCalculatorComponent implements OnInit {
           console.log(response);
           this.customer = response;
         });
+
+      // TODO think of a better way to reset these
       this.loanAmount = undefined;
       this.loanPeriod = undefined;
     }
-  }
-
-  // tslint:disable-next-line:typedef
-  getCreditScore() {
-    if (this.customer !== null && this.customer !== undefined) {
-      return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
-    }
-
   }
 
   // tslint:disable-next-line:typedef
@@ -51,14 +57,18 @@ export class LoanCalculatorComponent implements OnInit {
     return false;
   }
 
-  //for this, score has to be at least one
+  // tslint:disable-next-line:typedef
   maximumAmountForChosenPeriod() {
-
+    // credit score omitted since amount = (modifier * period) / score and here score needs to be 1.
+    return this.customer.creditModifier * this.loanPeriod;
   }
 
-  //for this, score has to be at least one
-  minimumPeriodForChosenAmount() {
+  // for this, score has to be at least one
 
+  // tslint:disable-next-line:typedef
+  minimumPeriodForChosenAmount() {
+    // credit score omitted since period = (score * amount) / modifier and score needs to be 1.
+    return this.loanAmount / this.customer.creditModifier;
   }
 
 
