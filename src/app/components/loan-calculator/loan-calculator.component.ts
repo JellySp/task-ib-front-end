@@ -30,6 +30,8 @@ export class LoanCalculatorComponent implements OnInit {
           console.log(response);
           this.customer = response;
         });
+      this.loanAmount = undefined;
+      this.loanPeriod = undefined;
     }
   }
 
@@ -39,6 +41,14 @@ export class LoanCalculatorComponent implements OnInit {
       return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
     }
 
+  }
+
+  // tslint:disable-next-line:typedef
+  correctLoanParameters() {
+    if ( this.loanPeriod >= 12 && this.loanPeriod <= 60 && this.loanAmount >= 2000 && this.loanAmount <= 10000) {
+      return true;
+    }
+    return false;
   }
 
 

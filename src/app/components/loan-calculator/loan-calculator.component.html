@@ -1,9 +1,11 @@
+<!--TODO remove code duplication-->
+
 <div class="form-container">
   <form class="form">
     <mat-form-field class="form-field">
       <mat-label>Personal identification code</mat-label>
 
-      <!--      TODO improve the next line-->
+      <!--      TODO improve the next line (checks for numbers only)-->
       <input
         onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
         [(ngModel)]="pic" (keyup)="getCustomer(pic)" name="PIC" matInput>
@@ -22,7 +24,7 @@
       <mat-form-field class="form-field">
         <mat-label>Loan amount (2000€ - 10 000€)</mat-label>
 
-        <!--      TODO improve the next line-->
+        <!--      TODO improve the next line (checks for numbers only)-->
         <input
           onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
           [(ngModel)]="loanAmount" name="Loan amount" matInput>
@@ -33,13 +35,13 @@
         <mat-label>Loan period (12 - 60 months)</mat-label>
 
         <!--      TODO improve the next line-->
-        <input
-          onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
-          [(ngModel)]="loanPeriod" name="loan period" matInput>
+        <input onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))" [(ngModel)]="loanPeriod" name="loan period" matInput>
       </mat-form-field>
 
       <mat-error *ngIf="loanPeriod <12 || loanPeriod > 60">Invalid loan period</mat-error>
     </form>
+
+    <div *ngIf="correctLoanParameters()" class="credit-score">{{getCreditScore()}}</div>
 
 
   </div>
