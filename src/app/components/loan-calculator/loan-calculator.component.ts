@@ -21,10 +21,10 @@ export class LoanCalculatorComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   isEligibleForLoan() {
-    if (this.customer.creditModifier === 0 || this.getCreditScore() <= 1) {
-      return false;
+    if (this.getCreditScore() >= 1) {
+      return true;
     }
-    return true;
+    return false;
 
   }
 

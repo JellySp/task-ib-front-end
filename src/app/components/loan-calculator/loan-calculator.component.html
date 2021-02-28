@@ -41,9 +41,12 @@
       <mat-error *ngIf="loanPeriod <12 || loanPeriod > 60">Invalid loan period</mat-error>
     </form>
 
-    <div class="eligible-for-loan" *ngIf="isEligibleForLoan()">You are eligible for this loan.</div>
-    <div class="eligible-for-loan" *ngIf="!isEligibleForLoan()">You are  NOT eligible for this loan.</div>
-    <div class="credit-modifier">{{getCreditScore()}}</div>
+
+    <div class="eligible-for-loan" *ngIf="isEligibleForLoan() && correctLoanParameters()">You are eligible for this loan.</div>
+    <div class="eligible-for-loan" *ngIf="!isEligibleForLoan() && correctLoanParameters()">You are  NOT eligible for this loan.</div>
+
+<!--    TODO remove this in final build-->
+    <div class="credit-modifier">Customer credit score: {{getCreditScore()}}</div>
 
   </div>
 
