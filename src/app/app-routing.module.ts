@@ -5,7 +5,7 @@ import {LoanCalculatorComponent} from './components/loan-calculator/loan-calcula
 import {ErrorComponent} from './components/error/error.component';
 
 const routes: Routes = [
-  {path: '', component: LoanCalculatorComponent },
+  {path: '', component: LandingComponent },
   {path: 'calculator', component: LoanCalculatorComponent },
   {path: '**', component: ErrorComponent }
 

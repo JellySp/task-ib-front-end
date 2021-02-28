@@ -1,0 +1,34 @@
+.title-text {
+  width: 100%;
+  top: 20%;
+  text-align: center;
+}
+
+
+.container {
+  display: flex;
+  height: 800px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.calculator-button{
+  background: none;
+  border-radius:50px;
+  font-size: x-large;
+  padding: 10px;
+  color: #3f51b5;
+  border: #3f51b5 2px solid;
+  transition: 0.2s;
+}
+.calculator-button:hover {
+  background-color: #3f51b5;
+
+
+  color: white;
+  cursor: pointer;
+
+}
+
+

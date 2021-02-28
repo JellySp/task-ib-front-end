@@ -7,5 +7,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  //font-family: "Varela Round", sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.title-text {
+  margin: 20px;
+  font-size: xxx-large;
+  position: absolute;
+  z-index: 1;
   font-family: "Varela Round", sans-serif;
 }
+
+* {
+  background-color: #ffeb30;
+}
+
