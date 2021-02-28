@@ -6,7 +6,7 @@ import {FormControl} from '@angular/forms';
 @Component({
   selector: 'app-loan-calculator',
   templateUrl: './loan-calculator.component.html',
-  styleUrls: ['./loan-calculator.component.css']
+  styleUrls: ['./loan-calculator.component.scss']
 })
 export class LoanCalculatorComponent implements OnInit {
 
