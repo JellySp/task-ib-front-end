@@ -51,6 +51,14 @@ export class LoanCalculatorComponent implements OnInit {
     return false;
   }
 
+  maximumAmountForChosenPeriod() {
+
+  }
+
+  minimumPeriodForChosenAmount() {
+
+  }
+
 
   ngOnInit(): void {
 
