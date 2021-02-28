@@ -12,13 +12,17 @@ export class LoanCalculatorComponent implements OnInit {
 
   customer: Customer;
   pic = new FormControl('').value;
+  creditScore;
+  loanAmount;
+  loanPeriod;
 
-  constructor( private customerService: CustomerDataService,
-               private router: Router ) { }
+  constructor(private customerService: CustomerDataService,
+              private router: Router) {
+  }
 
   // tslint:disable-next-line:typedef
   getCustomer(pic) {
-    if (pic.length > 10 && pic.length < 12) {
+    if (pic.length === 11) {
 
       console.log(this.pic);
       this.customerService.getCustomer(pic).subscribe(
@@ -26,10 +30,17 @@ export class LoanCalculatorComponent implements OnInit {
           console.log(response);
           this.customer = response;
         });
+    }
+  }
 
+  // tslint:disable-next-line:typedef
+  getCreditScore() {
+    if (this.customer !== null && this.customer !== undefined) {
+      return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
     }
 
   }
+
 
   ngOnInit(): void {
 
@@ -44,5 +55,6 @@ export class Customer {
     public lastName: boolean,
     public pic: string,
     public creditModifier: number
-  ) { }
+  ) {
+  }
 }

@@ -1,22 +1,32 @@
-.pic-form {
+.form-container {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  color: #cbcbcb;
+
+}
+
+.form {
   min-width: 200px;
   max-width: 1000px;
   width: 100%;
 }
 
-.pic-full-width {
+.form-field {
   width: 100%;
   text-align: center;
 }
 
 
-.pic-form-div {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
+mat-error {
+  text-align: center;
 }
 
-
+.calculations-container {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%);
+}
 
