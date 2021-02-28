@@ -51,10 +51,12 @@ export class LoanCalculatorComponent implements OnInit {
     return false;
   }
 
+  //for this, score has to be at least one
   maximumAmountForChosenPeriod() {
 
   }
 
+  //for this, score has to be at least one
   minimumPeriodForChosenAmount() {
 
   }
