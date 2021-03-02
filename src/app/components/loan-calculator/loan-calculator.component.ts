@@ -13,12 +13,22 @@ export class LoanCalculatorComponent implements OnInit {
   pic = new FormControl('').value;
   loanAmount;
   loanPeriod;
+  minLoanAmount = 2000;
+  maxLoanAmount = 10000;
+  minPeriod = 12;
+  maxPeriod = 60;
+  minCreditScore = 1;
+  standardPICLength = 11;
 
   constructor(private customerService: CustomerDataService) {
   }
 
-  isEligibleForLoan(): boolean {
-    return this.getCreditScore() >= 1;
+  isEligibleForCurrentLoan(): boolean {
+    return this.getCreditScore() >= this.minCreditScore;
+  }
+
+  isEligibleForAnyLoan(): boolean {
+    return this.customer.creditModifier >= this.minLoanAmount / this.maxPeriod;
   }
 
   getCreditScore(): number {
@@ -27,7 +37,7 @@ export class LoanCalculatorComponent implements OnInit {
 
 
   getCustomer(pic): void {
-    if (pic.length === 11) {
+    if (pic.length === this.standardPICLength) {
       console.log(this.pic);
       this.customerService.getCustomer(pic).subscribe(
         response => {
@@ -41,8 +51,16 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
-  correctLoanParameters(): boolean {
-    return this.loanPeriod >= 12 && this.loanPeriod <= 60 && this.loanAmount >= 2000 && this.loanAmount <= 10000;
+  isValidLoanConditions(): boolean {
+    return  this.isValidLoanPeriod() && this.isValidLoanAmount();
+  }
+
+  isValidLoanPeriod(): boolean {
+    return this.loanPeriod >= this.minPeriod && this.loanPeriod <= this.maxPeriod;
+  }
+
+  isValidLoanAmount(): boolean {
+    return this.loanAmount >= this.minLoanAmount && this.loanAmount <= this.maxLoanAmount
   }
 
   getMaximumAmountForChosenPeriod(): number {

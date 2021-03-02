@@ -17,7 +17,7 @@
 
 
 </div>
-<div class="calculations-container customer-debt" *ngIf="customer !== undefined && customer !== null && (customer.creditModifier <= 0 || isModifierTooLow())">
+<div class="calculations-container customer-debt" *ngIf="customer !== undefined && customer !== null && !isEligibleForAnyLoan()">
   <mat-error>You are not eligible for a loan.</mat-error>
 </div>
 <div class="calculations-container" *ngIf="customer !== undefined && customer !== null && !isModifierTooLow() && pic.length === 11">
@@ -48,11 +48,11 @@
 
 
 
-    <div class="eligible-for-loan fail" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
+    <div class="eligible-for-loan fail" *ngIf="!isEligibleForCurrentLoan() && isValidLoanConditions()">
       <p>Loan unavailable.</p>
     </div>
 
-    <div class="conditions conditions-on-any" *ngIf="correctLoanParameters() && getMaximumAmountForChosenPeriod() >= 2000">
+    <div class="conditions conditions-on-any" *ngIf="isValidLoanConditions() && getMaximumAmountForChosenPeriod() >= 2000">
       <p *ngIf="getMaximumAmountForChosenPeriod() > 2000 && getMaximumAmountForChosenPeriod() < 10000 && getMaximumAmountForChosenPeriod() != loanAmount">
         Maximum loan amount for chosen period: {{getMaximumAmountForChosenPeriod()}}
       </p>
@@ -63,7 +63,7 @@
 
 
 
-    <div class="conditions conditions-on-failure" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
+    <div class="conditions conditions-on-failure" *ngIf="!isEligibleForCurrentLoan() && isValidLoanConditions()">
       <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">
         Minimum period for current loan sum: {{getMinimumPeriodForChosenAmount()}} months
       </p>
@@ -78,7 +78,7 @@
       </p>
     </div>
 
-    <div class="eligible-for-loan success" *ngIf="isEligibleForLoan() && correctLoanParameters()" routerLink="/details">
+    <div class="eligible-for-loan success" *ngIf="isEligibleForCurrentLoan() && isValidLoanConditions()" routerLink="/details">
       <p>Apply for loan!</p>
     </div>
 
