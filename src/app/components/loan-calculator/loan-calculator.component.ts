@@ -44,11 +44,13 @@ export class LoanCalculatorComponent implements OnInit {
           console.log(response);
           this.customer = response;
         });
-
-      // TODO think of a better way to reset these
-      this.loanAmount = undefined;
-      this.loanPeriod = undefined;
     }
+  }
+
+  resetCustomer(): void {
+    // TODO think of a better way to reset these
+    this.loanAmount = undefined;
+    this.loanPeriod = undefined;
   }
 
   isValidLoanConditions(): boolean {
@@ -82,6 +84,7 @@ export class LoanCalculatorComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
 
 }
 

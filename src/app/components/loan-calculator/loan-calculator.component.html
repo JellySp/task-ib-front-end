@@ -8,7 +8,7 @@
       <!--      TODO improve the next line (checks for numbers only)-->
       <input
         onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
-        [(ngModel)]="pic" (keyup)="getCustomer(pic)" name="PIC" matInput>
+        [(ngModel)]="pic" (keyup)="resetCustomer()" (keyup)="getCustomer(pic)" name="PIC" matInput>
     </mat-form-field>
     <mat-error *ngIf="pic.length > 11">PIC too long.</mat-error>
     <mat-error *ngIf="customer === null && pic.length === 11" class="statistics">Customer not found on database.
