@@ -55,6 +55,12 @@ export class LoanCalculatorComponent implements OnInit {
     return Math.ceil(this.loanAmount / this.customer.creditModifier);
   }
 
+  // this method not necessary for given test cases but in reality there might be cases where credit modifier <1
+  // but still not 0.
+  isModifierTooLow(): boolean {
+   return (this.customer.creditModifier / 2000) * 60 < 1;
+  }
+
   ngOnInit(): void {
 
   }
