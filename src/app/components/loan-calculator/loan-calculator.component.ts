@@ -19,23 +19,17 @@ export class LoanCalculatorComponent implements OnInit {
   }
 
 
-  // tslint:disable-next-line:typedef
-  isEligibleForLoan() {
-    if (this.getCreditScore() >= 1) {
-      return true;
-    }
-    return false;
-
+  isEligibleForLoan(): boolean {
+    return this.getCreditScore() >= 1;
   }
 
-  // tslint:disable-next-line:typedef
-  getCreditScore() {
+  getCreditScore(): number {
     return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
   }
-  // tslint:disable-next-line:typedef
-  getCustomer(pic) {
-    if (pic.length === 11) {
 
+
+  getCustomer(pic): void {
+    if (pic.length === 11) {
       console.log(this.pic);
       this.customerService.getCustomer(pic).subscribe(
         response => {
@@ -49,28 +43,19 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
-  correctLoanParameters() {
-    if ( this.loanPeriod >= 12 && this.loanPeriod <= 60 && this.loanAmount >= 2000 && this.loanAmount <= 10000) {
-      return true;
-    }
-    return false;
+  correctLoanParameters(): boolean {
+    return this.loanPeriod >= 12 && this.loanPeriod <= 60 && this.loanAmount >= 2000 && this.loanAmount <= 10000;
   }
 
-  // tslint:disable-next-line:typedef
-  getMaximumAmountForChosenPeriod() {
-
-      // credit score omitted since amount = (modifier / score) * period and here score needs to be 1.
-      return Math.ceil(this.customer.creditModifier * this.loanPeriod);
-
+  getMaximumAmountForChosenPeriod(): number {
+    // no credit score in formula because in this case it has to be 1
+    return Math.ceil(this.customer.creditModifier * this.loanPeriod);
   }
 
-  // tslint:disable-next-line:typedef
-  getMinimumPeriodForChosenAmount() {
-    // credit score omitted since period = (score * amount) / modifier and score needs to be 1.
+  getMinimumPeriodForChosenAmount(): number {
+    // no credit score in formula because in this case it has to be 1
     return Math.ceil(this.loanAmount / this.customer.creditModifier);
   }
-
 
   ngOnInit(): void {
 
