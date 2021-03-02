@@ -60,7 +60,7 @@ export class LoanCalculatorComponent implements OnInit {
   }
 
   isValidLoanAmount(): boolean {
-    return this.loanAmount >= this.minLoanAmount && this.loanAmount <= this.maxLoanAmount
+    return this.loanAmount >= this.minLoanAmount && this.loanAmount <= this.maxLoanAmount;
   }
 
   getMaximumAmountForChosenPeriod(): number {
