@@ -48,7 +48,9 @@
       <p>Apply for loan!</p>
     </div>
 
-    <div class="conditions-on-success"></div>
+    <div class="conditions-on-success" *ngIf="isEligibleForLoan() && correctLoanParameters()">
+      Max amt for chosen period {{getMaximumAmountForChosenPeriod()}}
+    </div>
 
 
     <div class="eligible-for-loan fail" *ngIf="!isEligibleForLoan() && correctLoanParameters()">

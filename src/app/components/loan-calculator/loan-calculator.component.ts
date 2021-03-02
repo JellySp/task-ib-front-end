@@ -59,8 +59,11 @@ export class LoanCalculatorComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   getMaximumAmountForChosenPeriod() {
-    // credit score omitted since amount = (modifier * period) / score and here score needs to be 1.
-    return Math.ceil(this.customer.creditModifier * this.loanPeriod);
+    if (this.getCreditScore() <= 1) {
+      // credit score omitted since amount = (modifier / score) * period and here score needs to be 1.
+      return Math.ceil(this.customer.creditModifier * this.loanPeriod);
+    }
+    return Math.ceil((this.customer.creditModifier / this.getCreditScore()) * this.loanPeriod);
   }
 
   // tslint:disable-next-line:typedef
