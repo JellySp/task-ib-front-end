@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerDataService} from '../../services/customer-data.service';
-import {Router} from '@angular/router';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -17,7 +16,6 @@ export class LoanCalculatorComponent implements OnInit {
 
   constructor(private customerService: CustomerDataService) {
   }
-
 
   isEligibleForLoan(): boolean {
     return this.getCreditScore() >= 1;
