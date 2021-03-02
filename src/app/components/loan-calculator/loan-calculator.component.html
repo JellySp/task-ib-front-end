@@ -17,8 +17,8 @@
 
 
 </div>
-
-<div *ngIf="customer !== undefined && customer !== null" class="calculations-container">
+<div class="calculations-container customer-debt" *ngIf="customer !== undefined && customer !== null && customer.creditModifier <= 0">You are not eligible for a loan.</div>
+<div class="calculations-container" *ngIf="customer !== undefined && customer !== null && customer.creditModifier > 0">
   <div class="form-container">
     <form class="form">
       <mat-form-field class="form-field">
@@ -48,15 +48,18 @@
       <p>Apply for loan!</p>
     </div>
 
-    <div class="conditions-on-success" *ngIf="isEligibleForLoan() && correctLoanParameters()">
-      Max amt for chosen period {{getMaximumAmountForChosenPeriod()}}
+    <div class="conditions-on-any" *ngIf="correctLoanParameters() && getMaximumAmountForChosenPeriod() >= 2000">
+      <p *ngIf="getMaximumAmountForChosenPeriod() > 2000 && getMaximumAmountForChosenPeriod() < 10000">
+        Maximum loan amount for chosen period: {{getMaximumAmountForChosenPeriod()}}
+      </p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() >= 10000">Maximum amount for chosen period: 10 000€</p>
     </div>
 
 
     <div class="eligible-for-loan fail" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
       <p>Loan unavailable.</p>
     </div>
-    <div class="conditions-on-failure" *ngIf="!isEligibleForLoan() && correctLoanParameters()" >
+    <div class="conditions-on-failure" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
       <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">Minimum period for current loan
         sum: {{getMinimumPeriodForChosenAmount()}} months</p>
       <p *ngIf="getMinimumPeriodForChosenAmount() > 60">Requested loan amount not available for any period.</p>
