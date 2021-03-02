@@ -60,15 +60,13 @@ export class LoanCalculatorComponent implements OnInit {
   // tslint:disable-next-line:typedef
   getMaximumAmountForChosenPeriod() {
     // credit score omitted since amount = (modifier * period) / score and here score needs to be 1.
-    return this.customer.creditModifier * this.loanPeriod;
+    return Math.ceil(this.customer.creditModifier * this.loanPeriod);
   }
-
-  // for this, score has to be at least one
 
   // tslint:disable-next-line:typedef
   getMinimumPeriodForChosenAmount() {
     // credit score omitted since period = (score * amount) / modifier and score needs to be 1.
-    return this.loanAmount / this.customer.creditModifier;
+    return Math.ceil(this.loanAmount / this.customer.creditModifier);
   }
 
 

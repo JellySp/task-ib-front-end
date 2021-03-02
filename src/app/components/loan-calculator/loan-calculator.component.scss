@@ -33,5 +33,29 @@ mat-label {
   transform: translate(-50%);
 }
 
+.eligible-for-loan {
+  border-radius: 10px;
+  text-align: center;
+}
+
+.eligible-for-loan p {
+  padding: 5px;
+}
+
+.success {
+  background-color: greenyellow;
+  cursor: pointer;
+  color: black;
+}
+
+.fail {
+  background-color: red;
+  color: white;
+}
+
+
+
+
+
 
 

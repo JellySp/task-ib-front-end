@@ -35,30 +35,39 @@
         <mat-label>Loan period (12 - 60 months)</mat-label>
 
         <!--      TODO improve the next line-->
-        <input onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))" [(ngModel)]="loanPeriod" name="loan period" matInput>
+        <input
+          onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
+          [(ngModel)]="loanPeriod" name="loan period" matInput>
       </mat-form-field>
 
       <mat-error *ngIf="loanPeriod <12 || loanPeriod > 60">Invalid loan period</mat-error>
     </form>
 
 
-    <div class="eligible-for-loan" *ngIf="isEligibleForLoan() && correctLoanParameters()">You are eligible for this loan.</div>
-    <div class="eligible-for-loan" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
-      <p>You are  NOT eligible for this loan.</p>
-      <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">Minimum period for current loan sum: {{getMinimumPeriodForChosenAmount()}} months</p>
-      <p *ngIf="getMinimumPeriodForChosenAmount() > 60">Requested loan amount not available for any period.</p>
-      <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">Maximum loan sum for chosen period: {{getMaximumAmountForChosenPeriod()}}</p>
-      <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">No loan sum available for chosen period.</p>
+    <div class="eligible-for-loan success" *ngIf="isEligibleForLoan() && correctLoanParameters()" routerLink="/details">
+      <p>Apply for loan!</p>
+    </div>
 
+    <div class="conditions-on-success"></div>
+
+
+    <div class="eligible-for-loan fail" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
+      <p>Loan unavailable.</p>
+    </div>
+    <div class="conditions-on-failure" *ngIf="!isEligibleForLoan() && correctLoanParameters()" >
+      <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">Minimum period for current loan
+        sum: {{getMinimumPeriodForChosenAmount()}} months</p>
+      <p *ngIf="getMinimumPeriodForChosenAmount() > 60">Requested loan amount not available for any period.</p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">Maximum loan sum for chosen
+        period: {{getMaximumAmountForChosenPeriod()}}</p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">No loan sum available for chosen period.</p>
     </div>
 
 
-<!--    TODO remove this in final build-->
+    <!--    TODO remove this in final build-->
     <div class="credit-modifier">Customer credit score: {{getCreditScore()}}</div>
 
   </div>
-
-
 
 
 </div>
