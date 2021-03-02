@@ -43,7 +43,15 @@
 
 
     <div class="eligible-for-loan" *ngIf="isEligibleForLoan() && correctLoanParameters()">You are eligible for this loan.</div>
-    <div class="eligible-for-loan" *ngIf="!isEligibleForLoan() && correctLoanParameters()">You are  NOT eligible for this loan.</div>
+    <div class="eligible-for-loan" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
+      <p>You are  NOT eligible for this loan.</p>
+      <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">Minimum period for current loan sum: {{getMinimumPeriodForChosenAmount()}} months</p>
+      <p *ngIf="getMinimumPeriodForChosenAmount() > 60">Requested loan amount not available for any period.</p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">Maximum loan sum for chosen period: {{getMaximumAmountForChosenPeriod()}}</p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">No loan sum available for chosen period.</p>
+
+    </div>
+
 
 <!--    TODO remove this in final build-->
     <div class="credit-modifier">Customer credit score: {{getCreditScore()}}</div>
