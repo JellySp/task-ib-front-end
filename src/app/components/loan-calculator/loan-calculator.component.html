@@ -44,19 +44,19 @@
     </form>
 
 
-    <div class="eligible-for-loan success" *ngIf="isEligibleForLoan() && correctLoanParameters()" routerLink="/details">
-      <p>Apply for loan!</p>
-    </div>
+
 
     <div class="eligible-for-loan fail" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
       <p>Loan unavailable.</p>
     </div>
 
     <div class="conditions conditions-on-any" *ngIf="correctLoanParameters() && getMaximumAmountForChosenPeriod() >= 2000">
-      <p *ngIf="getMaximumAmountForChosenPeriod() > 2000 && getMaximumAmountForChosenPeriod() < 10000">
+      <p *ngIf="getMaximumAmountForChosenPeriod() > 2000 && getMaximumAmountForChosenPeriod() < 10000 && getMaximumAmountForChosenPeriod() != loanAmount">
         Maximum loan amount for chosen period: {{getMaximumAmountForChosenPeriod()}}
       </p>
-      <p *ngIf="getMaximumAmountForChosenPeriod() >= 10000">Maximum amount for chosen period: 10 000€</p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() >= 10000 && loanAmount != 10000">
+        Maximum amount for chosen period: 10 000€
+      </p>
     </div>
 
 
@@ -68,6 +68,10 @@
       <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">Maximum loan sum for chosen
         period: {{getMaximumAmountForChosenPeriod()}}</p>
       <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">No loan sum available for chosen period.</p>
+    </div>
+
+    <div class="eligible-for-loan success" *ngIf="isEligibleForLoan() && correctLoanParameters()" routerLink="/details">
+      <p>Apply for loan!</p>
     </div>
 
 
