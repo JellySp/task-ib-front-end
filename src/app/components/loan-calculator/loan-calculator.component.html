@@ -62,12 +62,18 @@
 
 
     <div class="conditions conditions-on-failure" *ngIf="!isEligibleForLoan() && correctLoanParameters()">
-      <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">Minimum period for current loan
-        sum: {{getMinimumPeriodForChosenAmount()}} months</p>
-      <p *ngIf="getMinimumPeriodForChosenAmount() > 60">Requested loan amount not available for any period.</p>
-      <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">Maximum loan sum for chosen
-        period: {{getMaximumAmountForChosenPeriod()}}</p>
-      <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">No loan sum available for chosen period.</p>
+      <p *ngIf="getMinimumPeriodForChosenAmount() <= 60">
+        Minimum period for current loan sum: {{getMinimumPeriodForChosenAmount()}} months
+      </p>
+      <p *ngIf="getMinimumPeriodForChosenAmount() > 60">
+        Requested loan amount not available for any period.
+      </p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() >= 2000">
+        Maximum loan sum for chosen period: {{getMaximumAmountForChosenPeriod()}}
+      </p>
+      <p *ngIf="getMaximumAmountForChosenPeriod() < 2000">
+        No loan sum available for chosen period.
+      </p>
     </div>
 
     <div class="eligible-for-loan success" *ngIf="isEligibleForLoan() && correctLoanParameters()" routerLink="/details">
