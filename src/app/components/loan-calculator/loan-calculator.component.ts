@@ -47,6 +47,10 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
+  verifyCustomer(): boolean {
+    return false;
+  }
+
   resetCustomer(): void {
     // TODO think of a better way to reset these
     this.loanAmount = undefined;
