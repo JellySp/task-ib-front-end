@@ -1,0 +1,55 @@
+.form-container {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  color: #cbcbcb;
+}
+
+.form {
+  min-width: 200px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.form-field {
+  width: 100%;
+  text-align: center;
+}
+
+mat-error {
+  text-align: center;
+}
+
+mat-label {
+  color: #cbcbcb;
+}
+
+.calculations-container {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.eligible-for-loan {
+  border-radius: 10px;
+  text-align: center;
+}
+
+.eligible-for-loan p {
+  padding: 5px;
+}
+
+.success {
+  background-color: greenyellow;
+  cursor: pointer;
+  color: black;
+}
+
+.fail {
+  background-color: red;
+  color: white;
+}
+
+/*# sourceMappingURL=loan-calculator.component.css.map */

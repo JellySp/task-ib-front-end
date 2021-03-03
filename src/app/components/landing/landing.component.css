@@ -1,0 +1,32 @@
+.title-text {
+  width: 100%;
+  top: 20%;
+  text-align: center;
+  color: #cbcbcb;
+}
+
+.container {
+  display: flex;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator-button {
+  background: none;
+  border-radius: 100px;
+  font-size: x-large;
+  padding: 10px 14px 10px 14px;
+  color: #cbcbcb;
+  border: #cbcbcb 2px solid;
+  transition: 0.2s;
+}
+
+.calculator-button:hover {
+  background-color: #ffffff;
+  border: #ffffff 2px solid;
+  color: #2b3141;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=landing.component.css.map */
