@@ -78,8 +78,8 @@
       </p>
     </div>
 
-    <div class="eligible-for-loan success" *ngIf="isEligibleForCurrentLoan() && isValidLoanConditions()" routerLink="/details">
-      <p>Apply for loan!</p>
+    <div class="eligible-for-loan success" *ngIf="isEligibleForCurrentLoan() && isValidLoanConditions()">
+      <p (click)="verifyCustomerData()">Apply for loan!</p>
     </div>
 
 

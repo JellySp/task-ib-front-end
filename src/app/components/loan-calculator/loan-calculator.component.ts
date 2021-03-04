@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerDataService} from '../../services/customer-data.service';
 import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-loan-calculator',
@@ -19,8 +21,9 @@ export class LoanCalculatorComponent implements OnInit {
   maxPeriod = 60;
   minCreditScore = 1;
   standardPICLength = 11;
+  correctCustomerData;
 
-  constructor(private customerService: CustomerDataService) {
+  constructor(private customerService: CustomerDataService, private router: Router) {
   }
 
   isEligibleForCurrentLoan(): boolean {
@@ -47,8 +50,20 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
-  verifyCustomer(): boolean {
-    return false;
+  verifyCustomerData(): void {
+    this.customerService.verifyCustomerData(this.pic, this.loanAmount, this.loanPeriod).subscribe(
+      response => {
+        this.correctCustomerData = response;
+        console.log(response);
+        if (response) {
+          this.router.navigate(['details']);
+        } else {
+          this.router.navigate(['error']);
+        }
+      }
+    );
+
+
   }
 
   resetCustomer(): void {
@@ -58,7 +73,7 @@ export class LoanCalculatorComponent implements OnInit {
   }
 
   isValidLoanConditions(): boolean {
-    return  this.isValidLoanPeriod() && this.isValidLoanAmount();
+    return this.isValidLoanPeriod() && this.isValidLoanAmount();
   }
 
   isValidLoanPeriod(): boolean {
@@ -82,7 +97,7 @@ export class LoanCalculatorComponent implements OnInit {
   // this method not necessary for given test cases but in reality there might be cases where credit modifier <1
   // but still not 0.
   isModifierTooLow(): boolean {
-   return (this.customer.creditModifier / 2000) * 60 < 1;
+    return (this.customer.creditModifier / 2000) * 60 < 1;
   }
 
   ngOnInit(): void {
