@@ -50,6 +50,7 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
+  // verifies customer data after submitting their application to check for data tampering
   verifyCustomerData(): void {
     this.customerService.verifyCustomerData(this.pic, this.loanAmount, this.loanPeriod).subscribe(
       response => {
@@ -59,6 +60,8 @@ export class LoanCalculatorComponent implements OnInit {
           this.router.navigate(['details']);
         } else {
           this.router.navigate(['error']);
+          // as you may notice, I haven't defined a route for 'error'
+          // this is because the wildcard route points to ErrorComponent already
         }
       }
     );
