@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Customer} from '../components/loan-calculator/loan-calculator.component';
-import {API_URL} from '../app.constants';
+import {LoanOffer} from '../components/loan-calculator/loan-calculator.component';
+
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,18 @@ export class CustomerDataService {
   constructor(private  http: HttpClient) {
   }
 
-  // tslint:disable-next-line:typedef
-  getCustomer(pic) {
-    console.log('In getCustomer() of CustomerDataService');
-    return this.http.get<Customer>(`http://localhost:8080/findByPic?pic=${pic}`);
+  getLoanOffer(pic, loanAmount, loanPeriod): Observable<LoanOffer> {
+
+    return this.http.get<LoanOffer>(`http://localhost:8080/getLoanOffer?pic=${pic}&loanAmount=${loanAmount}&loanPeriod=${loanPeriod}`);
+  }
+
+  // This method is verifying if the customer tried to hack their variables in the browser to report a higher credit score
+  // I don't completely understand how to return a boolean yet
+  checkIsEligibleForAnyLoan(pic): Observable<boolean> {
+    return this.http.get<boolean>(`http://localhost:8080/checkIsEligibleForAnyLoan?pic=${pic}`);
+  }
+
+  checkCustomerExistsOnDataBase(pic): Observable<boolean> {
+    return this.http.get<boolean>(`http://localhost:8080/checkCustomerExistsOnDataBase?pic=${pic}`);
   }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerDataService} from '../../services/customer-data.service';
 import {FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-loan-calculator',
@@ -8,77 +9,93 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./loan-calculator.component.scss']
 })
 export class LoanCalculatorComponent implements OnInit {
-
-  customer: Customer;
+  loanOffer;
   pic = new FormControl('').value;
   loanAmount;
   loanPeriod;
   minLoanAmount = 2000;
   maxLoanAmount = 10000;
-  minPeriod = 12;
-  maxPeriod = 60;
-  minCreditScore = 1;
+  minLoanPeriod = 12;
+  maxLoanPeriod = 60;
   standardPICLength = 11;
+  isEligibleForAnyLoan: boolean;
+  customerExistsOnDataBase: boolean;
 
   constructor(private customerService: CustomerDataService) {
   }
 
-  isEligibleForCurrentLoan(): boolean {
-    return this.getCreditScore() >= this.minCreditScore;
-  }
 
-  isEligibleForAnyLoan(): boolean {
-    return this.customer.creditModifier >= this.minLoanAmount / this.maxPeriod;
-  }
-
-  getCreditScore(): number {
-    return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
-  }
-
-
-  getCustomer(pic): void {
-    if (pic.length === this.standardPICLength) {
-      console.log(this.pic);
-      this.customerService.getCustomer(pic).subscribe(
-        response => {
-          console.log(response);
-          this.customer = response;
-        });
+  checkCustomer(): void {
+    if (this.pic.length === this.standardPICLength) {
+      this.checkCustomerExistsOnDataBase();
+      this.checkIsEligibleForAnyLoan();
     }
   }
 
-  resetCustomer(): void {
-    // TODO think of a better way to reset these
-    this.loanAmount = undefined;
-    this.loanPeriod = undefined;
+  checkCustomerExistsOnDataBase(): void {
+    if (this.pic.length === 11) {
+      this.customerService.checkCustomerExistsOnDataBase(this.pic).subscribe(
+        response => {
+          this.customerExistsOnDataBase = response;
+        }
+      );
+    }
   }
 
-  isValidLoanConditions(): boolean {
-    return  this.isValidLoanPeriod() && this.isValidLoanAmount();
+  checkIsEligibleForAnyLoan(): void {
+    this.customerService.checkIsEligibleForAnyLoan(this.pic).subscribe(
+      response => {
+        this.isEligibleForAnyLoan = response;
+
+      }
+    );
   }
 
-  isValidLoanPeriod(): boolean {
-    return this.loanPeriod >= this.minPeriod && this.loanPeriod <= this.maxPeriod;
+  isEligibleForCurrentLoan(): boolean {
+    if (this.loanAmount !== undefined && this.loanPeriod !== undefined && this.loanOffer !== undefined) {
+      return this.loanOffer.maxAmountForCurrentPeriod >= this.loanAmount && this.loanOffer.minPeriodForCurrentAmount <= this.loanPeriod;
+    }
+    return false;
   }
 
-  isValidLoanAmount(): boolean {
+  isCorrectLoanParameters(): boolean {
+    return this.isCorrectLoanAmount() && this.isCorrectLoanPeriod();
+  }
+
+  isCorrectLoanAmount(): boolean {
     return this.loanAmount >= this.minLoanAmount && this.loanAmount <= this.maxLoanAmount;
   }
 
-  getMaximumAmountForChosenPeriod(): number {
-    // no credit score in formula because in this case it has to be 1
-    return Math.ceil(this.customer.creditModifier * this.loanPeriod);
+  isCorrectLoanPeriod(): boolean {
+    return this.loanPeriod >= this.minLoanPeriod && this.loanPeriod <= this.maxLoanPeriod;
   }
 
-  getMinimumPeriodForChosenAmount(): number {
-    // no credit score in formula because in this case it has to be 1
-    return Math.ceil(this.loanAmount / this.customer.creditModifier);
+
+  getLoanOffer(): void {
+    if (this.isCorrectLoanParameters()) {
+      this.customerService.getLoanOffer(this.pic, this.loanAmount, this.loanPeriod).subscribe(
+        response => {
+          console.log(response);
+          this.loanOffer = response;
+          console.log(this.loanOffer);
+        });
+    }
+
   }
 
-  // this method not necessary for given test cases but in reality there might be cases where credit modifier <1
-  // but still not 0.
-  isModifierTooLow(): boolean {
-   return (this.customer.creditModifier / 2000) * 60 < 1;
+  getMaxAmountForCurrentPeriod(): number {
+    if (this.loanOffer !== null) {
+      return this.loanOffer.maxAmountForCurrentPeriod;
+    }
+  }
+
+  getMinPeriodForCurrentAmount(): number {
+    return this.loanOffer.minPeriodForCurrentAmount;
+  }
+
+  clearLoanParameters(): void {
+    this.loanAmount = undefined;
+    this.loanPeriod = undefined;
   }
 
   ngOnInit(): void {
@@ -88,13 +105,11 @@ export class LoanCalculatorComponent implements OnInit {
 
 }
 
-export class Customer {
+
+export class LoanOffer {
   constructor(
-    public id: number,
-    public firstName: string,
-    public lastName: boolean,
-    public pic: string,
-    public creditModifier: number
+    public maxAmountForCurrentPeriod: number,
+    public minPeriodForCurrentAmount: number,
   ) {
   }
 }
