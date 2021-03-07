@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoanCalculatorComponent } from './loan-calculator.component';
+import {LoanCalculatorComponent} from './loan-calculator.component';
 
 describe('LoanCalculatorComponent', () => {
   let component: LoanCalculatorComponent;

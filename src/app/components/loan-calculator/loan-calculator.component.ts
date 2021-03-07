@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerDataService} from '../../services/customer-data.service';
 import {FormControl} from '@angular/forms';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-loan-calculator',
