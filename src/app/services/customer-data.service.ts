@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Customer} from '../components/loan-calculator/loan-calculator.component';
+import {LoanOffer} from '../components/loan-calculator/loan-calculator.component';
 
 import {Observable} from 'rxjs';
 
@@ -12,10 +12,9 @@ export class CustomerDataService {
   constructor(private  http: HttpClient) {
   }
 
+  getLoanOffer(pic, loanAmount, loanPeriod): Observable<LoanOffer> {
 
-  getCustomer(pic): Observable<Customer> {
-    console.log('In getCustomer() of CustomerDataService');
-    return this.http.get<Customer>(`http://localhost:8080/findByPic?pic=${pic}`);
+    return this.http.get<LoanOffer>(`http://localhost:8080/getLoanOffer?pic=${pic}&loanAmount=${loanAmount}&loanPeriod=${loanPeriod}`);
   }
 
   // This method is verifying if the customer tried to hack their variables in the browser to report a higher credit score
