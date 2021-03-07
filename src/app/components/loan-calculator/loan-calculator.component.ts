@@ -10,18 +10,20 @@ import {Router} from '@angular/router';
   styleUrls: ['./loan-calculator.component.scss']
 })
 export class LoanCalculatorComponent implements OnInit {
-
-  customer: Customer;
+  customer;
   pic = new FormControl('').value;
   loanAmount;
   loanPeriod;
   minLoanAmount = 2000;
   maxLoanAmount = 10000;
-  minPeriod = 12;
-  maxPeriod = 60;
+  minLoanPeriod = 12;
+  maxLoanPeriod = 60;
   minCreditScore = 1;
   standardPICLength = 11;
-  correctCustomerData;
+  isEligibleForAnyLoan: boolean;
+  customerExistsOnDataBase: boolean;
+  invalidAmount;
+  invalidPeriod;
 
   constructor(private customerService: CustomerDataService, private router: Router) {
   }
@@ -30,9 +32,6 @@ export class LoanCalculatorComponent implements OnInit {
     return this.getCreditScore() >= this.minCreditScore;
   }
 
-  isEligibleForAnyLoan(): boolean {
-    return this.customer.creditModifier >= this.minLoanAmount / this.maxPeriod;
-  }
 
   getCreditScore(): number {
     return (this.customer.creditModifier / this.loanAmount) * this.loanPeriod;
@@ -50,37 +49,41 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
-  // verifies customer data after submitting their application to check for data tampering
-  verifyCustomerData(): void {
-    this.customerService.verifyCustomerData(this.pic, this.loanAmount, this.loanPeriod).subscribe(
+  checkIsEligibleForAnyLoan(): void {
+    this.customerService.checkIsEligibleForAnyLoan(this.pic).subscribe(
       response => {
-        this.correctCustomerData = response;
+        this.isEligibleForAnyLoan = response;
         console.log(response);
-        if (response) {
-          this.router.navigate(['details']);
-        } else {
-          this.router.navigate(['error']);
-          // as you may notice, I haven't defined a route for 'error'
-          // this is because the wildcard route points to ErrorComponent already
-        }
       }
     );
-
-
   }
 
-  resetCustomer(): void {
-    // TODO think of a better way to reset these
-    this.loanAmount = undefined;
-    this.loanPeriod = undefined;
+  checkCustomerExistsOnDataBase(): void {
+    if (this.pic.length === 11) {
+      this.customerService.checkCustomerExistsOnDataBase(this.pic).subscribe(
+        response => {
+          this.customerExistsOnDataBase = response;
+          console.log(response);
+        }
+      );
+    }
   }
+
+
+  checkCustomer(): void {
+    if (this.pic.length === this.standardPICLength) {
+      this.checkIsEligibleForAnyLoan();
+      this.checkCustomerExistsOnDataBase();
+    }
+  }
+
 
   isValidLoanConditions(): boolean {
     return this.isValidLoanPeriod() && this.isValidLoanAmount();
   }
 
   isValidLoanPeriod(): boolean {
-    return this.loanPeriod >= this.minPeriod && this.loanPeriod <= this.maxPeriod;
+    return this.loanPeriod >= this.minLoanPeriod && this.loanPeriod <= this.maxLoanPeriod;
   }
 
   isValidLoanAmount(): boolean {
@@ -103,9 +106,25 @@ export class LoanCalculatorComponent implements OnInit {
     return (this.customer.creditModifier / 2000) * 60 < 1;
   }
 
+  isCorrectLoanPeriod(): boolean {
+    return this.loanPeriod >= this.minLoanPeriod && this.loanPeriod <= this.maxLoanPeriod;
+}
+
+  isCorrectLoanAmount(): boolean {
+    return this.loanAmount >= this.minLoanAmount && this.loanAmount <= this.maxLoanAmount;
+  }
+
+  isCorrectLoanParameters(): boolean {
+    return this.isCorrectLoanPeriod() && this.isCorrectLoanAmount();
+  }
+
+  getLoanOffer(): void {
+
+  }
   ngOnInit(): void {
 
   }
+
 
 
 }
@@ -117,6 +136,14 @@ export class Customer {
     public lastName: boolean,
     public pic: string,
     public creditModifier: number
+  ) {
+  }
+}
+
+export class LoanOffer {
+  constructor(
+    public maxAmountForCurrentPeriod: number,
+    public minPeriodForCurrentAmount: number,
   ) {
   }
 }

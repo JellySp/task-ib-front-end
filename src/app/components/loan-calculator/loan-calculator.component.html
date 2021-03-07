@@ -10,21 +10,21 @@
       <!--      TODO and therefore needs to stay for now. I intended to use input type="number" -->
       <input
         onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
-        [(ngModel)]="pic" (keyup)="resetCustomer()" (keyup)="getCustomer(pic)" name="PIC" matInput>
+        [(ngModel)]="pic" (keyup)="checkCustomer()" name="PIC" matInput>
     </mat-form-field>
     <mat-error *ngIf="pic.length > 11">PIC too long.</mat-error>
-    <mat-error *ngIf="customer === null && pic.length === 11" class="statistics">Customer not found on database.
+    <mat-error *ngIf="!customerExistsOnDataBase && pic.length === standardPICLength" class="statistics">Customer not found on database.
     </mat-error>
   </form>
 
 
 </div>
 <div class="calculations-container customer-debt"
-     *ngIf="customer !== undefined && customer !== null && !isEligibleForAnyLoan()">
+     *ngIf="customerExistsOnDataBase && !isEligibleForAnyLoan && pic.length === standardPICLength">
   <mat-error>You are not eligible for a loan.</mat-error>
 </div>
 <div class="calculations-container"
-     *ngIf="customer !== undefined && customer !== null && !isModifierTooLow() && pic.length === 11">
+     *ngIf="isEligibleForAnyLoan && pic.length === standardPICLength">
   <div class="form-container">
     <form class="form">
       <mat-form-field class="form-field">
@@ -33,9 +33,9 @@
         <!--      TODO improve the next line (checks for numbers only)-->
         <input
           onkeypress="return (event.charCode !== 8 && event.charCode === 0 || (event.charCode >= 48 && event.charCode <= 57))"
-          [(ngModel)]="loanAmount" name="Loan amount" matInput>
+          [(ngModel)]="loanAmount" (keyup)="getLoanOffer()" name="Loan amount" matInput>
       </mat-form-field>
-      <mat-error *ngIf="loanAmount <2000 || loanAmount > 10000">Invalid amount</mat-error>
+      <mat-error *ngIf="!isCorrectLoanAmount() && loanAmount.length !== 0">Invalid amount</mat-error>
 
       <mat-form-field class="form-field">
         <p>Loan period (12 - 60 months)</p>
@@ -46,7 +46,9 @@
           [(ngModel)]="loanPeriod" name="loan period" matInput>
       </mat-form-field>
 
-      <mat-error *ngIf="loanPeriod <12 || loanPeriod > 60">Invalid loan period</mat-error>
+      <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod.length !== 0">Invalid loan period</mat-error>
+      <button *ngIf="isCorrectLoanParameters()" mat-raised-button color="primary" class="button-submit">Submit request!</button>
+
     </form>
 
 
