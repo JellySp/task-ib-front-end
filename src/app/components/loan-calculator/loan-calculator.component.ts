@@ -42,6 +42,8 @@ export class LoanCalculatorComponent implements OnInit {
     }
   }
 
+
+
   checkIsEligibleForAnyLoan(): void {
     this.customerService.checkIsEligibleForAnyLoan(this.pic).subscribe(
       response => {

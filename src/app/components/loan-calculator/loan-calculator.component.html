@@ -5,14 +5,16 @@
     <mat-form-field class="form-field">
       <p>Personal identification code</p>
 
-      <!--      TODO improve the next line (checks for numbers only)-->
-      <!--      TODO find a better way. For some reason this <input> field doesnt work without the ugly onkeypress method-->
-      <!--      TODO and therefore needs to stay for now. I intended to use input type="number" -->
-      <input onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
+
+      <!--    Right now this was the only way I found to allow only digits on a String input. -->
+      <!--    I did try to find a better solution but it was not a priority right now.-->
+      <input
+        onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
         [(ngModel)]="pic" (keyup)="checkCustomer(); clearLoanParameters()" name="PIC" matInput>
     </mat-form-field>
     <mat-error *ngIf="pic.length > 11">PIC too long.</mat-error>
-    <mat-error *ngIf="!customerExistsOnDataBase && pic !== undefined && pic.length === standardPICLength" class="statistics">Customer not found on database.
+    <mat-error *ngIf="!customerExistsOnDataBase && pic.length === standardPICLength" class="statistics">Customer not
+      found on database.
     </mat-error>
   </form>
 
@@ -31,28 +33,30 @@
       <mat-form-field class="form-field">
         <p>Loan amount (2000€ - 10 000€)</p>
 
-        <!--      TODO improve the next line (checks for numbers only)-->
-        <input onkeypress="return (event.charCode !== 8 && event.charCode === 0 || (event.charCode >= 48 && event.charCode <= 57))"
-          [(ngModel)]="loanAmount" (keyup)="getLoanOffer()" name="Loan amount" matInput>
+        <!--      I know the next line looks ugly but I tried making it work with "input type="number" -->
+        <!--      but for some odd reason it doesn't work. -->
+        <input type="number" class="number-input" [(ngModel)]="loanAmount" (keyup)="getLoanOffer()" name="Loan amount" matInput>
       </mat-form-field>
-      <mat-error *ngIf="!isCorrectLoanAmount() && loanAmount !== undefined && loanAmount.length !== 0">Invalid amount</mat-error>
+      <mat-error *ngIf="!isCorrectLoanAmount() && loanAmount !== undefined && loanAmount.length !== 0">Invalid amount
+      </mat-error>
 
       <mat-form-field class="form-field">
         <p>Loan period (12 - 60 months)</p>
 
-        <!--      TODO improve the next line-->
-        <input onkeyup="return (event.charCode !== 8 && event.charCode === 0 || (event.charCode >= 48 && event.charCode <= 57))"
-          [(ngModel)]="loanPeriod" (keyup)="getLoanOffer()" name="loan period" matInput>
+        <input type="number" class="number-input" [(ngModel)]="loanPeriod" (keyup)="getLoanOffer()" name="loan period" matInput>
       </mat-form-field>
 
-      <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod !== undefined && loanPeriod.length !== 0">Invalid loan period</mat-error>
+      <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod !== undefined && loanPeriod.length !== 0">Invalid loan
+        period
+      </mat-error>
 
 
     </form>
 
 
-
-      <button *ngIf="!isEligibleForCurrentLoan() && isCorrectLoanParameters()" mat-stroked-button color="warn" class="button-unavailable">Loan unavailable!</button>
+    <button *ngIf="!isEligibleForCurrentLoan() && isCorrectLoanParameters()" mat-stroked-button color="warn"
+            class="button-unavailable">Loan unavailable!
+    </button>
 
 
     <div class="conditions conditions-on-any"
@@ -82,10 +86,9 @@
       </p>
     </div>
 
-    <button *ngIf="isEligibleForCurrentLoan()" routerLink="/details" mat-stroked-button class="button-submit">Apply for loan!</button>
-
-
-
+    <button *ngIf="isEligibleForCurrentLoan()" routerLink="/details" mat-stroked-button class="button-submit">Apply for
+      loan!
+    </button>
 
 
   </div>
