@@ -51,9 +51,9 @@
     </form>
 
 
-    <div class="eligible-for-loan fail" *ngIf="!isEligibleForCurrentLoan() && isCorrectLoanParameters()">
-      <p>Loan unavailable.</p>
-    </div>
+
+      <button *ngIf="!isEligibleForCurrentLoan() && isCorrectLoanParameters()" mat-stroked-button color="warn" class="button-unavailable">Loan unavailable!</button>
+
 
     <div class="conditions conditions-on-any"
          *ngIf="isCorrectLoanParameters() && getMaxAmountForCurrentPeriod() >= 2000">
