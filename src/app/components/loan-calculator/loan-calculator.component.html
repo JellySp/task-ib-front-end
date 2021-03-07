@@ -7,7 +7,7 @@
 
 
       <!--    Right now this was the only way I found to allow only digits on a String input. -->
-      <!--    I did try to find a better solution but it was not a priority right now.-->
+      <!--    I did try to find a better solution but it was not a priority.-->
       <input
         onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
         [(ngModel)]="pic" (keyup)="checkCustomer(); clearLoanParameters()" name="PIC" matInput>
