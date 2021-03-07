@@ -24,6 +24,6 @@ export class CustomerDataService {
   }
 
   checkCustomerExistsOnDataBase(pic): Observable<boolean> {
-    return this.http.get<boolean>(`http://localhost:8080/customerExistsOnDataBase?pic=${pic}`);
+    return this.http.get<boolean>(`http://localhost:8080/checkCustomerExistsOnDataBase?pic=${pic}`);
   }
 }
