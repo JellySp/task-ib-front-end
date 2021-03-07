@@ -23,7 +23,9 @@
   <mat-error>You are not eligible for a loan.</mat-error>
 </div>
 <div class="calculations-container"
-     *ngIf="isEligibleForAnyLoan && pic !== undefined && pic.length === standardPICLength">
+     *ngIf="isEligibleForAnyLoan && customerExistsOnDataBase && pic !== undefined && pic.length === standardPICLength">
+
+
   <div class="form-container">
     <form class="form">
       <mat-form-field class="form-field">
