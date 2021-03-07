@@ -47,7 +47,8 @@
       </mat-form-field>
 
       <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod.length !== 0">Invalid loan period</mat-error>
-      <button *ngIf="isCorrectLoanParameters()" mat-raised-button color="primary" class="button-submit">Submit request!</button>
+
+      <button *ngIf="isCorrectLoanParameters()" (click)="getLoanOffer()" mat-raised-button color="primary" class="button-submit">Submit request!</button>
 
     </form>
 
@@ -83,9 +84,6 @@
       </p>
     </div>
 
-    <div class="eligible-for-loan success" *ngIf="isEligibleForCurrentLoan() && isValidLoanConditions()">
-      <p (click)="verifyCustomerData()">Apply for loan!</p>
-    </div>
 
 
     <!--    TODO remove this in final build-->

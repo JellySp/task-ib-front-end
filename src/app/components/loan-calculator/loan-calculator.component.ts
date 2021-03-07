@@ -22,8 +22,6 @@ export class LoanCalculatorComponent implements OnInit {
   standardPICLength = 11;
   isEligibleForAnyLoan: boolean;
   customerExistsOnDataBase: boolean;
-  invalidAmount;
-  invalidPeriod;
 
   constructor(private customerService: CustomerDataService, private router: Router) {
   }
