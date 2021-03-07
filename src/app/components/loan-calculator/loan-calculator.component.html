@@ -9,21 +9,21 @@
       <!--      TODO find a better way. For some reason this <input> field doesnt work without the ugly onkeypress method-->
       <!--      TODO and therefore needs to stay for now. I intended to use input type="number" -->
       <input onkeypress="return (event.charCode !== 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))"
-        [(ngModel)]="pic" (keyup)="checkCustomer()" name="PIC" matInput>
+        [(ngModel)]="pic" (keyup)="checkCustomer(); clearLoanParameters()" name="PIC" matInput>
     </mat-form-field>
     <mat-error *ngIf="pic.length > 11">PIC too long.</mat-error>
-    <mat-error *ngIf="!customerExistsOnDataBase && pic.length === standardPICLength" class="statistics">Customer not found on database.
+    <mat-error *ngIf="!customerExistsOnDataBase && pic !== undefined && pic.length === standardPICLength" class="statistics">Customer not found on database.
     </mat-error>
   </form>
 
 
 </div>
 <div class="calculations-container customer-debt"
-     *ngIf="customerExistsOnDataBase && !isEligibleForAnyLoan && pic.length === standardPICLength">
+     *ngIf="customerExistsOnDataBase && !isEligibleForAnyLoan && pic.length === standardPICLength && pic !== undefined">
   <mat-error>You are not eligible for a loan.</mat-error>
 </div>
 <div class="calculations-container"
-     *ngIf="isEligibleForAnyLoan && pic.length === standardPICLength">
+     *ngIf="isEligibleForAnyLoan && pic !== undefined && pic.length === standardPICLength">
   <div class="form-container">
     <form class="form">
       <mat-form-field class="form-field">
@@ -33,7 +33,7 @@
         <input onkeypress="return (event.charCode !== 8 && event.charCode === 0 || (event.charCode >= 48 && event.charCode <= 57))"
           [(ngModel)]="loanAmount" (keyup)="getLoanOffer()" name="Loan amount" matInput>
       </mat-form-field>
-      <mat-error *ngIf="!isCorrectLoanAmount() && loanAmount.length !== 0">Invalid amount</mat-error>
+      <mat-error *ngIf="!isCorrectLoanAmount() && loanAmount !== undefined && loanAmount.length !== 0">Invalid amount</mat-error>
 
       <mat-form-field class="form-field">
         <p>Loan period (12 - 60 months)</p>
@@ -43,7 +43,7 @@
           [(ngModel)]="loanPeriod" (keyup)="getLoanOffer()" name="loan period" matInput>
       </mat-form-field>
 
-      <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod.length !== 0">Invalid loan period</mat-error>
+      <mat-error *ngIf="!isCorrectLoanPeriod() && loanPeriod !== undefined && loanPeriod.length !== 0">Invalid loan period</mat-error>
 
 
     </form>

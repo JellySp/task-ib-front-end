@@ -31,12 +31,12 @@ export class LoanCalculatorComponent implements OnInit {
       this.checkIsEligibleForAnyLoan();
     }
   }
+
   checkCustomerExistsOnDataBase(): void {
     if (this.pic.length === 11) {
       this.customerService.checkCustomerExistsOnDataBase(this.pic).subscribe(
         response => {
           this.customerExistsOnDataBase = response;
-          console.log(response);
         }
       );
     }
@@ -46,15 +46,17 @@ export class LoanCalculatorComponent implements OnInit {
     this.customerService.checkIsEligibleForAnyLoan(this.pic).subscribe(
       response => {
         this.isEligibleForAnyLoan = response;
-        console.log(response);
+
       }
     );
   }
 
   isEligibleForCurrentLoan(): boolean {
-    return this.loanOffer.maxAmountForCurrentPeriod >= this.loanAmount && this.loanOffer.minPeriodForCurrentAmount <= this.loanPeriod;
+    if (this.loanAmount !== undefined && this.loanPeriod !== undefined && this.loanOffer !== undefined) {
+      return this.loanOffer.maxAmountForCurrentPeriod >= this.loanAmount && this.loanOffer.minPeriodForCurrentAmount <= this.loanPeriod;
+    }
+    return false;
   }
-
 
   isCorrectLoanParameters(): boolean {
     return this.isCorrectLoanAmount() && this.isCorrectLoanPeriod();
@@ -82,11 +84,18 @@ export class LoanCalculatorComponent implements OnInit {
   }
 
   getMaxAmountForCurrentPeriod(): number {
-    return this.loanOffer.maxAmountForCurrentPeriod;
+    if (this.loanOffer !== null) {
+      return this.loanOffer.maxAmountForCurrentPeriod;
+    }
   }
 
   getMinPeriodForCurrentAmount(): number {
     return this.loanOffer.minPeriodForCurrentAmount;
+  }
+
+  clearLoanParameters(): void {
+    this.loanAmount = undefined;
+    this.loanPeriod = undefined;
   }
 
   ngOnInit(): void {
